@@ -1,0 +1,29 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Instalar Dependências
+      run: sudo apt-get install -y gcc
+
+    - name: Compilar Código Principal
+      run: gcc -o programa programa.c
+
+    - name: Compilar Testes
+      run: gcc -o test test.c programa.c -I. 
+
+    - name: Executar Testes
+      run: ./test || exit 1
+
+    - name: Exibir Resultado dos Testes
+      run: echo "Testes concluídos com sucesso!"
